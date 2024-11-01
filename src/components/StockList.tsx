@@ -1,4 +1,3 @@
-// frontend/src/components/StockList.tsx
 import React, { useEffect, useState } from 'react';
 import { 
     Paper,
@@ -16,12 +15,6 @@ import { api } from '../services/api';
 import { yahooFinanceService, StockPrice } from '../services/yahooFinance';
 import { Stock } from '../types';
 
-interface Stock {
-    symbol: string;
-    company_name: string;
-    current_price: number;
-    last_updated: string;
-}
 
 
 export const StockList: React.FC = () => {
@@ -50,20 +43,25 @@ export const StockList: React.FC = () => {
         }
     };
 
+    // Initialize data
     useEffect(() => {
         const initialize = async () => {
             const stocksList = await fetchStocks();
             await updatePrices(stocksList);
         };
         initialize();
+    }, []); // This effect runs only once on mount
 
-        // Set up auto-refresh every 60 seconds
-        const intervalId = setInterval(async () => {
-            await updatePrices(stocks);
+    // Set up auto-refresh
+    useEffect(() => {
+        if (stocks.length === 0) return;
+
+        const intervalId = setInterval(() => {
+            updatePrices(stocks);
         }, 60000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [stocks]); // Now properly depending on stocks
 
     const handleManualRefresh = async () => {
         await updatePrices(stocks);
@@ -140,4 +138,3 @@ export const StockList: React.FC = () => {
         </Paper>
     );
 };
-export {};
