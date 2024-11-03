@@ -1,7 +1,7 @@
 // frontend/src/services/yahooFinance.ts
 import axios from 'axios';
 
-const BASE_URL = 'https://query1.finance.yahoo.com/v8/finance/chart';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
 export interface StockPrice {
   regularMarketPrice: number;
@@ -13,7 +13,7 @@ export interface StockPrice {
 export const yahooFinanceService = {
   getStockPrice: async (symbol: string): Promise<StockPrice> => {
     try {
-      const response = await axios.get(`${BASE_URL}/${symbol}`);
+      const response = await axios.get(`${API_BASE_URL}/yahoo-finance/${symbol}`);
       const quote = response.data.chart.result[0].meta;
       
       return {

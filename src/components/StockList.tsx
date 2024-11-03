@@ -25,6 +25,7 @@ export const StockList: React.FC = () => {
 
     const fetchStocks = async () => {
         const response = await api.getStocks();
+        console.log(response.data); // Check what is being returned
         setStocks(response.data);
         return response.data;
     };

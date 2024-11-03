@@ -9,7 +9,10 @@ module.exports = function(app) {
             changeOrigin: true,
             secure: false,
             headers: {
-                Connection: 'keep-alive'
+                'Access-Control-Allow-Origin': 'http://localhost:3002',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
             }
         })
     );

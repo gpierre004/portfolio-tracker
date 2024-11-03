@@ -4,16 +4,25 @@ import { Stock, Transaction } from '../types';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
+// Create an axios instance with default config
+const axiosInstance = axios.create({
+    baseURL: API_BASE_URL,
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
 export const api = {
     // Stocks
-    getStocks: () => axios.get(`${API_BASE_URL}/stocks`),
-    addStock: (stock: Stock) => axios.post(`${API_BASE_URL}/stocks`, stock),
+    getStocks: () => axiosInstance.get('/stocks'),
+    addStock: (stock: Stock) => axiosInstance.post('/stocks', stock),
     
     // Transactions
-    getTransactions: () => axios.get(`${API_BASE_URL}/transactions`),
+    getTransactions: () => axiosInstance.get('/transactions'),
     addTransaction: (transaction: Transaction) => 
-        axios.post(`${API_BASE_URL}/transactions`, transaction),
+        axiosInstance.post('/transactions', transaction),
     
     // Portfolio
-    getPortfolio: () => axios.get(`${API_BASE_URL}/portfolio`),
+    getPortfolio: () => axiosInstance.get('/portfolio'),
 };

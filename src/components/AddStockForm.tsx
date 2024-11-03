@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
 import { api } from '../services/api';
+import axios from 'axios';
 
 export const AddStockForm: React.FC = () => {
     const [symbol, setSymbol] = useState('');
@@ -17,9 +18,13 @@ export const AddStockForm: React.FC = () => {
             });
             setSymbol('');
             setCompanyName('');
-            // You can add a success message or callback here
+            // Add success notification here
         } catch (error) {
             console.error('Error adding stock:', error);
+            // Add error notification here
+            if (axios.isAxiosError(error)) {
+                console.error('API Error:', error.response?.data);
+            }
         }
     };
 
